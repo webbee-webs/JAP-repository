@@ -1,7 +1,15 @@
-var submit = ()=>{
+var submit = () => {
     let user = document.getElementById('user')
-    if(user.value==""){return}
+    if (user.value == "") {
+        user.style.borderColor = "red"
+        user.placeholder = "Campo obligatorio"
+        return
+    }
     let pass = document.getElementById('pass')
-    if(pass.value==""){return}
+    if (pass.value == "") {
+        pass.style.borderColor = "red"
+        pass.placeholder = "Campo obligatorio"
+        return
+    }
     window.location.href = "./home.html"
 }

@@ -23,6 +23,10 @@
       margin-bottom: 5px;
       max-width: min(300px,70vw);
     }
+
+    #login input::placeholder{
+      color: red;
+    }
     
     #login label{
       margin: auto;
@@ -43,9 +47,9 @@
       <img class="logo" src="./img/login.png">
       <div class="flex-column" id="login">
         <h2>Login</h2>
-        <label for="user">Usuario</label>
+        <label for="user">Usuario*</label>
         <input id="user" type="text" class="form-control">
-        <label for="pass">Contraseña</label>
+        <label for="pass">Contraseña*</label>
         <input id="pass" type="password" class="form-control">
         <button class="btn btn-primary" onclick="submit()">Ingresar</button>
       </div>
