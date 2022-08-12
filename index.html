@@ -4,6 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="google-signin-client_id" content="743824685183-8eh08l3ears7fklluls8565kg5qmpvu6.apps.googleusercontent.com">
   <title>eMercado - Todo lo que busques está aquí</title>
   
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
@@ -52,6 +53,8 @@
         <label for="pass">Contraseña*</label>
         <input id="pass" type="password" class="form-control">
         <button class="btn btn-primary" onclick="submit()">Ingresar</button>
+        <span>O</span>
+        <div class="g-signin2 btn" data-onsuccess="onSignIn"></div>
       </div>
     </div>
   </main>
@@ -65,6 +68,7 @@
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="js/login.js"></script>
 </body>
 
