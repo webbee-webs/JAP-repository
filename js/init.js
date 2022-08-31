@@ -39,3 +39,7 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+let navBar = document.getElementsByClassName('nav-item')
+userName = `<a class="nav-link" href="/my-profile.html" >${sessionStorage.getItem('userName')}</a>`
+navBar[navBar.length -1].innerHTML =  userName

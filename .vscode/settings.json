@@ -5,8 +5,11 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/Thumbs.db": true
+    "**/Thumbs.db": true,
+    ".gitattributes": true
   },
-  "hide-files.files": [],
+  "hide-files.files": [
+    ".gitattributes"
+  ],
   "liveServer.settings.port": 5501
 }
