@@ -1,7 +1,10 @@
 var containerHTML = document.getElementById('container-products')
+var allData = []
 var getData = ()=>{getJSONData(`https://japceibal.github.io/emercado-api/cats_products/${localStorage.catID}.json`)
     .then(e => {
         var products = e.data.products;
+        console.log(e.data)
+        allData = products
         showProducts(products)
     })}
 
@@ -56,7 +59,7 @@ var filter = () => {
                 }
                 return false
             })
-
+            allData = list
             showProducts(list)
 
         })
@@ -68,6 +71,52 @@ var clearFilter = () => {
     getData()
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                   ORDENAR                                  */
+/* -------------------------------------------------------------------------- */
+
+function sortProducts(type,array){
+    let result = [];
+        if(type == 'costDes'){
+            result = array.sort(function(a, b) {
+                let aCount = parseInt(a.cost);
+                let bCount = parseInt(b.cost);
+    
+                if ( aCount > bCount ){ return -1; }
+                if ( aCount < bCount ){ return 1; }
+                return 0;
+            })
+        }else if(type == 'costAsc'){
+            result = array.sort(function(a, b) {
+                let aCount = parseInt(a.cost);
+                let bCount = parseInt(b.cost);
+    
+                if ( aCount > bCount ){ return 1; }
+                if ( aCount < bCount ){ return -1; }
+                return 0;
+            })
+        }else{
+            result = array.sort(function(a, b) {
+                let aCount = parseInt(a.soldCount);
+                let bCount = parseInt(b.soldCount);
+    
+                if ( aCount > bCount ){ return -1; }
+                if ( aCount < bCount ){ return 1; }
+                return 0;
+            })
+        }
+        showProducts(result)
+    }
+
+
+/* -------------------------------------------------------------------------- */
+/*                                   EVENTS                                   */
+/* -------------------------------------------------------------------------- */
+
 document.getElementById('rangeFilterCount').addEventListener('click', () => filter())
 document.getElementById('clearRangeFilter').addEventListener('click', () => clearFilter())
+document.getElementById('sortCostDes').addEventListener('click',()=>sortProducts('costDes',allData))
+document.getElementById('sortCostAsc').addEventListener('click',()=>sortProducts('costAsc',allData))
+document.getElementById('sortSoldCount').addEventListener('click',()=>sortProducts('change',allData))
+
 getData()
