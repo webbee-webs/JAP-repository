@@ -16,7 +16,7 @@ var getData = () => {
 var productID = (id) => {
     console.log(id)
     localStorage.setItem('productID', id)
-    window.location.href = "/product-info.html";
+    window.location.href = "./product-info.html";
 }
 
 
