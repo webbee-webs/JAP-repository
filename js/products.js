@@ -1,12 +1,23 @@
 var containerHTML = document.getElementById('container-products')
 var allData = []
-var getData = ()=>{getJSONData(`https://japceibal.github.io/emercado-api/cats_products/${localStorage.catID}.json`)
+var getData = () => {
+    getJSONData(`https://japceibal.github.io/emercado-api/cats_products/${localStorage.catID}.json`)
     .then(e => {
         var products = e.data.products;
-        console.log(e.data)
         allData = products
         showProducts(products)
-    })}
+    })
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                PRODUCT INFO                                */
+/* -------------------------------------------------------------------------- */
+
+var productID = (id) => {
+    console.log(id)
+    localStorage.setItem('productID', id)
+    window.location.href = "/product-info.html";
+}
 
 
 /* -------------------------------------------------------------------------- */
@@ -16,8 +27,9 @@ var getData = ()=>{getJSONData(`https://japceibal.github.io/emercado-api/cats_pr
 var showProducts = (list) => {
     containerHTML.innerHTML = ''
     for (product of list) {
+
         let card = `
-        <div class="card m-2" style="width: 18rem;">
+        <div onclick="productID(${product.id})" class="card m-2 cursor-active" style="width: 18rem;">
         <img src="${product.image}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">${product.name} </br> ${product.currency} ${product.cost}</h5>
@@ -75,38 +87,38 @@ var clearFilter = () => {
 /*                                   ORDENAR                                  */
 /* -------------------------------------------------------------------------- */
 
-function sortProducts(type,array){
+function sortProducts(type, array) {
     let result = [];
-        if(type == 'costDes'){
-            result = array.sort(function(a, b) {
-                let aCount = parseInt(a.cost);
-                let bCount = parseInt(b.cost);
-    
-                if ( aCount > bCount ){ return -1; }
-                if ( aCount < bCount ){ return 1; }
-                return 0;
-            })
-        }else if(type == 'costAsc'){
-            result = array.sort(function(a, b) {
-                let aCount = parseInt(a.cost);
-                let bCount = parseInt(b.cost);
-    
-                if ( aCount > bCount ){ return 1; }
-                if ( aCount < bCount ){ return -1; }
-                return 0;
-            })
-        }else{
-            result = array.sort(function(a, b) {
-                let aCount = parseInt(a.soldCount);
-                let bCount = parseInt(b.soldCount);
-    
-                if ( aCount > bCount ){ return -1; }
-                if ( aCount < bCount ){ return 1; }
-                return 0;
-            })
-        }
-        showProducts(result)
+    if (type == 'costDes') {
+        result = array.sort(function (a, b) {
+            let aCount = parseInt(a.cost);
+            let bCount = parseInt(b.cost);
+
+            if (aCount > bCount) { return -1; }
+            if (aCount < bCount) { return 1; }
+            return 0;
+        })
+    } else if (type == 'costAsc') {
+        result = array.sort(function (a, b) {
+            let aCount = parseInt(a.cost);
+            let bCount = parseInt(b.cost);
+
+            if (aCount > bCount) { return 1; }
+            if (aCount < bCount) { return -1; }
+            return 0;
+        })
+    } else {
+        result = array.sort(function (a, b) {
+            let aCount = parseInt(a.soldCount);
+            let bCount = parseInt(b.soldCount);
+
+            if (aCount > bCount) { return -1; }
+            if (aCount < bCount) { return 1; }
+            return 0;
+        })
     }
+    showProducts(result)
+}
 
 
 /* -------------------------------------------------------------------------- */
@@ -115,8 +127,8 @@ function sortProducts(type,array){
 
 document.getElementById('rangeFilterCount').addEventListener('click', () => filter())
 document.getElementById('clearRangeFilter').addEventListener('click', () => clearFilter())
-document.getElementById('sortCostDes').addEventListener('click',()=>sortProducts('costDes',allData))
-document.getElementById('sortCostAsc').addEventListener('click',()=>sortProducts('costAsc',allData))
-document.getElementById('sortSoldCount').addEventListener('click',()=>sortProducts('change',allData))
+document.getElementById('sortCostDes').addEventListener('click', () => sortProducts('costDes', allData))
+document.getElementById('sortCostAsc').addEventListener('click', () => sortProducts('costAsc', allData))
+document.getElementById('sortSoldCount').addEventListener('click', () => sortProducts('change', allData))
 
 getData()

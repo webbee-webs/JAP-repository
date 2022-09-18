@@ -15,6 +15,8 @@ let hideSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
+/* ---------------------------------- FETCH --------------------------------- */
+
 let getJSONData = function(url){
     let result = {};
     showSpinner();
@@ -39,6 +41,8 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+/* -------------------------------- USER NAME ------------------------------- */
 
 let navBar = document.getElementsByClassName('nav-item')
 userName = `<a class="nav-link" href="/my-profile.html" >${sessionStorage.getItem('userName')}</a>`
