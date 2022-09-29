@@ -197,3 +197,32 @@ a.custom-card:hover {
 #galeryOfImages>img{
   width: 300px;
 }
+
+/* ------------------------------ coment stars ------------------------------ */
+
+.comment__stars{
+  font-size: 1.5rem;
+  text-align: left;
+}
+
+.comment__stars input[type="radio"] {
+  display: none;
+}
+
+.comment__stars label {
+  color: grey;
+}
+
+.comment__stars {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+.comment__stars label:hover,
+.comment__stars label:hover ~ label {
+  color: orange;
+}
+
+.comment__stars input[type="radio"]:checked ~ label {
+  color: orange;
+}

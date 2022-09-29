@@ -3,6 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 var submit = () => {
+    sessionStorage.setItem('userName', 'null')
     let user = document.getElementById('user')
     if (user.value == "") {
         user.style.borderColor = "red"

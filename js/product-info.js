@@ -4,7 +4,7 @@ getJSONData(`https://japceibal.github.io/emercado-api/products/${localStorage.ge
 const showInfo = (data) => {
     var container = document.getElementById('productInfo')
     container.innerHTML = `
-    <a href='/products.html'>Regresar</a>
+    <a href='./products.html'>Regresar</a>
     <h2 class="bold mt-4">${data.name}</h2>
     <hr>
     <h3>Precio</h3>
@@ -15,12 +15,50 @@ const showInfo = (data) => {
     <p class="fs-5">${data.category}</p>
     <h3>Cantidad de vendidos</h3>
     <p class="fs-5">${data.soldCount}</p>
+
     <h3>Imágenes ilustrativas</h3>
-    <div id='galeryOfImages'></div>
+
+    <div id="carouselExampleIndicators" style="width: 50vw;" class="carousel slide" data-bs-ride="true">
+    <div class="carousel-indicators" id="carouselIndicators">
+    </div>
+    <div class="carousel-inner" id="galeryOfImages">
+    
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+    </button>
+</div>
     `
+    /* ---- Esta parte agrega el html necesario para que funcione cada imagen del slider --- */
+    let indicators = document.getElementById('carouselIndicators')
     let galery = document.getElementById('galeryOfImages')
+    let counterImg = 0
+
     for (image of data.images) {
-        galery.innerHTML += `<img src="${image}" class="img-thumbnail">`
+        galery.innerHTML += `<div class="carousel-item ${isActive(counterImg)
+        }">
+        <img src="${image}" class="d-block w-100" alt="...">
+        </div>`
+        indicators.innerHTML +=`
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counterImg}" aria-label="Slide ${counterImg} class="${isActive(counterImg)
+        }" ${isActive(counterImg, true)}></button>
+        `
+        counterImg++
+    }
+    showRelatedProducts(data.relatedProducts)
+}
+
+const isActive = (count, btn)=>{
+    if(btn == true && count==0){
+        return('class="active" aria-current="true"')
+    }
+    if(count==0){
+        return ('active')
     }
 }
 
@@ -34,7 +72,7 @@ getJSONData(`https://japceibal.github.io/emercado-api/products_comments/${localS
 const showComments = (data) => {
     var commentsContainer = document.querySelector('ol.list-group')
     // El if quita el mensaje de que no hay comentarios
-    if(data.length > 0){
+    if (data.length > 0) {
         commentsContainer.innerHTML = ''
     }
     for (comment of data) {
@@ -45,9 +83,8 @@ const showComments = (data) => {
                     ${comment.description}
                 </div>
             <div>
-                ${
-                    stars(comment.score)
-                }
+                ${stars(comment.score)
+            }
             </div>
         </li>
         `
@@ -58,14 +95,14 @@ const showComments = (data) => {
 /*                                    STARS                                   */
 /* -------------------------------------------------------------------------- */
 
-const stars = (stars)=>{
+const stars = (stars) => {
     CommStars = ''
-    for (e=5; e>0; e--){
-        if(stars > 0 ){
+    for (e = 5; e > 0; e--) {
+        if (stars > 0) {
             CommStars += `
             <span class="fa fa-star checked"></span>
             `
-        }else{
+        } else {
             CommStars += `
             <span class="fa fa-star "></span>
             `
@@ -73,4 +110,22 @@ const stars = (stars)=>{
         stars--
     }
     return CommStars
+}
+
+/* -------------------------------------------------------------------------- */
+/*                           Productos Relacionados                           */
+/* -------------------------------------------------------------------------- */
+
+const showRelatedProducts = (products) => {
+    let container = document.getElementById('relatedProducts')
+    for (product of products) {
+        let card = `
+        <div onclick="productID(${product.id})" class="card m-2 cursor-active" style="width: 18rem;">
+        <img src="${product.image}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">${product.name} </br> ${product.currency} ${product.cost}</h5>
+        </div>
+        </div>`
+        container.innerHTML += card
+    }
 }
