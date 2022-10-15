@@ -53,17 +53,49 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">Imagen</th>
+            <th scope="col" class="d-none d-sm-block">Imagen</th>
             <th scope="col">Nombre</th>
             <th scope="col">Costo</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Subtotal</th>
+            <th scope="col" class="table__cant">Cantidad</th>
+            <th scope="col" class="table__subtotal">Subtotal</th>
           </tr>
         </thead>
         <tbody class="table__products-list" id="table__products-list">
 
         </tbody>
       </table>
+      <div class="envio">
+        <form action="" class="envio__form" id="compra">
+          <div class="form__tipo">
+            <h3>Tipo de envio</h3>
+            <input type="radio" id="premium" name="tipo-de-envio">
+            <label for="premium"> Premium 2 a 5 días (15%)</label>
+            <br>
+            <input type="radio" id="express" name="tipo-de-envio">
+            <label for="express"> Express 5 a 8 días (7%)</label>
+            <br>
+            <input type="radio" id="standard" name="tipo-de-envio">
+            <label for="standard"> Standard 12 a 15 días (5%)</label>
+          </div>
+          
+          <div class="form__direccion">
+            <h3>Dirección</h3>
+            <div>
+              <label for="calle" class="form-label">Calle</label>
+              <input type="text" name="calle" id="calle" class="form-control">
+            </div>
+            <div>
+              <label for="numero" class="form-label">Número</label>
+              <input type="text" name="numero" id="numero" class="form-control">
+            </div>
+            <div>
+              <label for="esq" class="form-label">Esquina</label>
+              <input type="text" name="esq" id="esq" class="form-control">
+            </div>
+          </div>
+          <button type="submit" form="compra" class="btn btn-outline-primary m-3">Comprar</button>
+        </form>
+      </div>
     </div>
 
   </main>

@@ -1,11 +1,31 @@
+
+
 .table__thead{
     text-overflow: ellipsis;
 }
 
-.product__cant{
+.table__cant{
     width: 30px;
 }
 
 .product__image{
     max-width: 80px;
+}
+
+.table__subtotal{
+    width: 200px;
+}
+
+.form__tipo{
+    text-align: left;
+}
+.form__direccion{
+    margin-top:  20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    text-align: left;
+}
+.form__direccion h3{
+    grid-column: 1/3;
 }

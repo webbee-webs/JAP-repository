@@ -48,7 +48,7 @@ let newProduct = (product) => {
     product.body = () => {
         let html = `
         <tr class="product">
-            <th class="d-none d-sm-block ">
+            <th class="d-none d-sm-block">
                 <img class="product__image" src="${product.image}">
             </th>
             <th>
@@ -57,8 +57,8 @@ let newProduct = (product) => {
             <th>
             ${product.currency} ${product.unitCost}
             </th>
-            <th class="product__cant">
-                <input type="number" min="1" value="${product.count}" id="cant${product.id}" onchange="myCart.onChangeCount(${product.id})" class="form-control" autofocus>
+            <th>
+                <input type="number" min="1" value="${product.count}" id="cant${product.id}" onchange="myCart.onChangeCount(${product.id})" class="form-control">
             </th>
             <th>
                 ${product.currency} ${product.unitCost * product.count}
