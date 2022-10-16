@@ -70,7 +70,48 @@ var productID = (id) => {
 
 /* ------------------------------ CERRAR SESION ----------------------------- */
 
-document.getElementById('closeSession').addEventListener('click', ()=>{
+document.getElementById('closeSession').addEventListener('click', () => {
   sessionStorage.removeItem('userName')
 })
 
+
+var addData = (obj)=> {
+  cart.data[`id${obj.id}`] = obj
+  console.log(cart.data)
+  localStorage.setItem('cart', JSON.stringify(cart.data))
+}
+class Cart {
+  constructor() {
+    this.data = {}
+    this.container = document.getElementById('table__products-list')
+    if (localStorage.getItem('cart') !== null && localStorage.getItem('cart') !== 'undefined') {
+      this.data = JSON.parse(localStorage.getItem('cart'))
+    }
+    console.log(this.data)
+  }
+
+  addData(obj) {
+    this.data[`id${obj.id}`] = obj
+    console.log(this.data)
+    localStorage.setItem('cart', JSON.stringify(this.data))
+  }
+  clearData() {
+    localStorage.removeItem('cart')
+  }
+  getData() {
+    this.data = JSON.parse(localStorage.getItem('cart'))
+    console.log(this.data)
+  }
+  async render() {
+    this.container.innerHTML == ''
+    this.getData()
+    for (let data in this.data) {
+      data = newProduct(this.data[data])
+      this.container.innerHTML += data.body
+    }
+  }
+}
+
+var cart = new Cart()
+
+cart.getData()

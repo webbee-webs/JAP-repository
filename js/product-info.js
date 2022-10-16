@@ -5,6 +5,7 @@ const showInfo = (data) => {
     var container = document.getElementById('productInfo')
     container.innerHTML = `
     <a href='./products.html'>Regresar</a>
+    <button onclick="addData(${data})" >comprar</button>
     <h2 class="bold mt-4">${data.name}</h2>
     <hr>
     <h3>Precio</h3>
