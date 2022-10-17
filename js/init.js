@@ -74,12 +74,7 @@ document.getElementById('closeSession').addEventListener('click', () => {
   sessionStorage.removeItem('userName')
 })
 
-
-var addData = (obj)=> {
-  cart.data[`id${obj.id}`] = obj
-  console.log(cart.data)
-  localStorage.setItem('cart', JSON.stringify(cart.data))
-}
+/* --------------------------------- Carrito -------------------------------- */
 class Cart {
   constructor() {
     this.data = {}
@@ -87,31 +82,62 @@ class Cart {
     if (localStorage.getItem('cart') !== null && localStorage.getItem('cart') !== 'undefined') {
       this.data = JSON.parse(localStorage.getItem('cart'))
     }
-    console.log(this.data)
   }
 
-  addData(obj) {
-    this.data[`id${obj.id}`] = obj
-    console.log(this.data)
+  async addData (obj) {
+    obj = await newProduct(obj)
+    this.data[`item${obj.id}`] = obj
     localStorage.setItem('cart', JSON.stringify(this.data))
   }
+
   clearData() {
+    this.data = {}
     localStorage.removeItem('cart')
   }
   getData() {
     this.data = JSON.parse(localStorage.getItem('cart'))
-    console.log(this.data)
+    for(let data in this.data){
+      this.addData(this.data[data])
+    }
   }
   async render() {
-    this.container.innerHTML == ''
-    this.getData()
+    this.container.innerHTML = ''
     for (let data in this.data) {
-      data = newProduct(this.data[data])
-      this.container.innerHTML += data.body
+      this.addData(this.data[data])
+      this.container.innerHTML += this.data[data].body()
     }
   }
 }
 
-var cart = new Cart()
+var change = (id) =>{
+  cart.data[`item${id}`].count = document.getElementById(`cant${id}`).value
+  cart.render()
+}
 
-cart.getData()
+let newProduct = (product) => {
+  product.body = ()=>{
+    let html = `
+    <tr class="product">
+        <th class="d-none d-sm-block">
+            <img class="product__image" src="${product.images[0]}">
+        </th>
+        <th>
+            ${product.name}
+        </th>
+        <th>
+        ${product.currency} ${product.cost}
+        </th>
+        <th>
+            <input type="number" min="1" value="${product.count || 1}" id="cant${product.id}" onchange="change(${product.id})" class="form-control">
+        </th>
+        <th>
+            ${product.currency} ${(product.count || 1) * product.cost}
+        </th>
+    </tr>
+    `
+    return html
+  }
+  return product
+}
+
+var cart = new Cart()

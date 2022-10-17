@@ -44,31 +44,7 @@
 // }
 
 /* -------------------- Modificacion del objeto producto -------------------- */
-let newProduct = (product) => {
-    console.log(product)
-    product.body =  `
-        <tr class="product">
-            <th class="d-none d-sm-block">
-                <img class="product__image" src="${product.image}">
-            </th>
-            <th>
-                ${product.name}
-            </th>
-            <th>
-            ${product.currency} ${product.unitCost}
-            </th>
-            <th>
-                <input type="number" min="1" value="${product.count}" id="cant${product.id}" onchange="myCart.onChangeCount(${product.id})" class="form-control">
-            </th>
-            <th>
-                ${product.currency} ${product.unitCost * product.count}
-            </th>
-        </tr>
-        `
-    return product
-}
+
 
 // const myCart = new Carting()
-// myCart.render()
-
 cart.render()
