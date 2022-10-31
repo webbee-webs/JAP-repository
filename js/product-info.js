@@ -9,7 +9,7 @@ const showInfo = (data) => {
     var container = document.getElementById('productInfo')
     container.innerHTML = `
     <a href='./products.html'>Regresar</a>
-    <button onclick="cart.addData(dataProduct)">comprar</button>
+    <a href="./cart.html" class="btn btn-primary ml-3" onclick="cart.addData(dataProduct)">comprar</a>
 <h2 class="bold mt-4">${data.name}</h2>
 <hr>
 <h3>Precio</h3>

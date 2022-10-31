@@ -1,50 +1,38 @@
-/* -------------------------------------------------------------------------- */
-/*                                   Carrito                                  */
-/* -------------------------------------------------------------------------- */
-// class Carting {
-//     #id
-//     #data
-//     #value
-//     constructor(id = 25801) {
-//         this.#id = id
-//         this.articles = {}
-//         this.#data = this.getData()
-//         this.container = document.getElementById('table__products-list')
-//         this.load = false
-//     }
-
-//     /* --------------------------------- Metodos -------------------------------- */
-
-//     async getData() {
-//         this.#data = await getJSONData(CART_INFO_URL + this.#id + '.json')
-//             .then(e => e.data)
-//     }
-
-//     async render() {
-//         await this.#data
-//         this.container.innerHTML = ''
-//         if (!this.load) {
-//             this.load = true
-//             for (let product of this.#data.articles) {
-//                 newProduct(product)
-//                 this.articles[product.id] = product
-//                 this.container.innerHTML += product.body()
-//             }
-//             return
-//         }
-//         for (let product in this.articles){
-//             this.container.innerHTML += this.articles[product].body()
-//         }
-//     }
-
-//     onChangeCount = (productID) => {
-//         this.articles[productID].count = document.getElementById(`cant${productID}`).value
-//         this.render()
-//     }
-// }
-
-/* -------------------- Modificacion del objeto producto -------------------- */
-
-
-// const myCart = new Carting()
 cart.render()
+document.querySelector('.form__tipo').addEventListener('click', (e) => {
+    let radBut = document.querySelectorAll('input[type="radio"][name="tipo-de-envio"]')
+    for (button of radBut) {
+        if (button.checked) {
+            cart.envio = parseInt(button.value) / 100
+        }
+    }
+    cart.render()
+})
+
+var payMethodsFunc = () => {
+    let payMethods = document.querySelectorAll('input[name="pay-method"]')
+    for (Method of payMethods) {
+        console.log(Method.input)
+        let inputs = document.querySelectorAll(`#${Method.value}-form input`)
+        for (input of inputs) {
+            input.disabled = true
+        }
+        if (Method.checked) {
+            cart.payMethod = Method.value
+            let text = document.getElementById('forma-de-pago__text')
+            text.classList.remove('text-danger')
+            text.innerHTML = Method.dataset.name
+            let inputs = document.querySelectorAll(`#${cart.payMethod}-form input`)
+            for (input of inputs) {
+                input.disabled = false
+            }
+        }
+    }
+}
+
+document.getElementById('credit-card').addEventListener('click', ()=>payMethodsFunc())
+document.getElementById('bank').addEventListener('click', ()=>payMethodsFunc())
+
+document.getElementById('finalizar-compra').addEventListener('click',()=>{
+    cart.validate()
+})
