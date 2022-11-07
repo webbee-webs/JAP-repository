@@ -3,21 +3,30 @@
 /* -------------------------------------------------------------------------- */
 
 var submit = () => {
+    var loginCorrect = true
     sessionStorage.setItem('userName', 'null')
     let user = document.getElementById('user')
-    if (user.value == "") {
-        user.style.borderColor = "red"
-        user.placeholder = "Campo obligatorio"
-        return
-    }
     let pass = document.getElementById('pass')
-    if (pass.value == "") {
-        pass.style.borderColor = "red"
-        pass.placeholder = "Campo obligatorio"
-        return
+    user.classList.remove('is-invalid')
+    pass.classList.remove('is-invalid')
+
+    /* -------------------- Validacion del nombre de usuario -------------------- */
+    if (user.value == "") {
+        user.classList.add('is-invalid')
+        user.placeholder = "Campo obligatorio"
+        loginCorrect = false
     }
-    sessionStorage.setItem('userName', user.value)
-    window.location.href = "./home.html"
+    /* ------------------------ Validacion de contraseña ------------------------ */
+    if (pass.value == "") {
+        pass.classList.add('is-invalid')
+        pass.placeholder = "Campo obligatorio"
+        loginCorrect = false
+    }
+    /* ------------------------------- Redireccion ------------------------------ */
+    if (loginCorrect) {
+        sessionStorage.setItem('userName', user.value)
+        window.location.href = "./home.html"
+    }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -30,7 +39,7 @@ function onSignIn(googleUser) {
 }
 
 var loginGoogle = () => {
-    setTimeout(()=>{
+    setTimeout(() => {
         window.location.href = "./home.html"
     }, 4000)
 }

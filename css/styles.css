@@ -226,3 +226,6 @@ a.custom-card:hover {
 .comment__stars input[type="radio"]:checked ~ label {
   color: orange;
 }
+#container-products{
+  min-height: 50vh;
+}

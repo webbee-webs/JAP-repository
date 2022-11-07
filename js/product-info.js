@@ -1,3 +1,5 @@
+var comments = []
+
 getJSONData(`https://japceibal.github.io/emercado-api/products/${localStorage.getItem('productID')}.json`)
     .then(e => showInfo(e.data))
 
@@ -67,13 +69,17 @@ const isActive = (count, btn)=>{
 /* -------------------------------------------------------------------------- */
 
 getJSONData(`https://japceibal.github.io/emercado-api/products_comments/${localStorage.getItem('productID')}.json`)
-    .then(e => showComments(e.data))
+    .then(e => {
+        comments = e.data
+        showComments(e.data)
+    })
 
 const showComments = (data) => {
     var commentsContainer = document.querySelector('ol.list-group')
+    commentsContainer.innerHTML = ''
     // El if quita el mensaje de que no hay comentarios
-    if (data.length > 0) {
-        commentsContainer.innerHTML = ''
+    if (data.length < 1) {
+        commentsContainer.innerHTML = '<h4 class="text-secondary border border-secondary p-3 ">Upss... Parece que no hay comentarios</h4>'
     }
     for (comment of data) {
         commentsContainer.innerHTML += `
@@ -129,3 +135,25 @@ const showRelatedProducts = (products) => {
         container.innerHTML += card
     }
 }
+
+/* ---------------------------- Enviar comentario --------------------------- */
+
+document.getElementById('send-comment-btn').addEventListener('click',(e)=>{
+    let today = new Date()
+    let stars = 0
+    let comment = document.getElementById('floatingTextarea')
+    for(input of document.querySelectorAll('p.comment__stars input')){
+        if(input.checked){
+            stars = input.value
+        }
+    }
+    e.preventDefault()
+    comments.unshift({
+        user : sessionStorage.getItem('userName'),
+        dateTime : `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()} ${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`,
+        description : comment.value,
+        score: stars || 1
+    })
+    showComments(comments)
+    comment.innerHTML=''
+})
