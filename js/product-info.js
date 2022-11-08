@@ -1,37 +1,42 @@
+var dataProduct = {}
 getJSONData(`https://japceibal.github.io/emercado-api/products/${localStorage.getItem('productID')}.json`)
-    .then(e => showInfo(e.data))
-
+    .then(e => {
+        dataProduct = e.data
+        showInfo(e.data)
+    })
+    
 const showInfo = (data) => {
     var container = document.getElementById('productInfo')
     container.innerHTML = `
     <a href='./products.html'>Regresar</a>
-    <h2 class="bold mt-4">${data.name}</h2>
-    <hr>
-    <h3>Precio</h3>
-    <p class="fs-5">${data.currency + ' ' + data.cost}</p>
-    <h3>Descripción</h3>
-    <p class="fs-5">${data.description}</p>
-    <h3>Categoría</h3>
-    <p class="fs-5">${data.category}</p>
-    <h3>Cantidad de vendidos</h3>
-    <p class="fs-5">${data.soldCount}</p>
+    <a href="./cart.html" class="btn btn-primary ml-3" onclick="cart.addData(dataProduct)">comprar</a>
+<h2 class="bold mt-4">${data.name}</h2>
+<hr>
+<h3>Precio</h3>
+<p class="fs-5">${data.currency + ' ' + data.cost}</p>
+<h3>Descripción</h3>
+<p class="fs-5">${data.description}</p>
+<h3>Categoría</h3>
+<p class="fs-5">${data.category}</p>
+<h3>Cantidad de vendidos</h3>
+<p class="fs-5">${data.soldCount}</p>
 
-    <h3>Imágenes ilustrativas</h3>
+<h3>Imágenes ilustrativas</h3>
 
-    <div id="carouselExampleIndicators" style="width: 50vw;" class="carousel slide" data-bs-ride="true">
-    <div class="carousel-indicators" id="carouselIndicators">
-    </div>
-    <div class="carousel-inner" id="galeryOfImages">
-    
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+<div id="carouselExampleIndicators" style="width: 50vw;" class="carousel slide" data-bs-ride="true">
+  <div class="carousel-indicators" id="carouselIndicators">
+  </div>
+  <div class="carousel-inner" id="galeryOfImages">
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
-    </button>
+  </button>
 </div>
     `
     /* ---- Esta parte agrega el html necesario para que funcione cada imagen del slider --- */
@@ -41,23 +46,23 @@ const showInfo = (data) => {
 
     for (image of data.images) {
         galery.innerHTML += `<div class="carousel-item ${isActive(counterImg)
-        }">
+            }">
         <img src="${image}" class="d-block w-100" alt="...">
         </div>`
-        indicators.innerHTML +=`
+        indicators.innerHTML += `
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counterImg}" aria-label="Slide ${counterImg} class="${isActive(counterImg)
-        }" ${isActive(counterImg, true)}></button>
+            }" ${isActive(counterImg, true)}></button>
         `
         counterImg++
     }
     showRelatedProducts(data.relatedProducts)
 }
 
-const isActive = (count, btn)=>{
-    if(btn == true && count==0){
-        return('class="active" aria-current="true"')
+const isActive = (count, btn) => {
+    if (btn == true && count == 0) {
+        return ('class="active" aria-current="true"')
     }
-    if(count==0){
+    if (count == 0) {
         return ('active')
     }
 }

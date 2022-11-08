@@ -49,6 +49,12 @@
   <!-- ----------------------------------------------------------------------- -->
   <main class="container text-center pt-4">
     <h2>Carrito de compras</h2>
+    <div class="alert alert-danger d-none" role="alert" id="cant-0">
+      No puedes tener cantidad 0 en un producto
+    </div>
+    <div class="alert alert-success d-none" id="compraExitosa" role="alert">
+      La compra ha sido realizada con exito
+    </div>
     <div class="container text-left" id="carrito">
       <table class="table table-striped">
         <thead>
@@ -64,39 +70,129 @@
 
         </tbody>
       </table>
+
+      <!-- ----------------------------------------------------------------------- -->
+      <!--                                  Envio                                  -->
+      <!-- ----------------------------------------------------------------------- -->
       <div class="envio">
-        <form action="" class="envio__form" id="compra">
-          <div class="form__tipo">
+        <form action="" class="envio__form " id="compra" >
+          <div class="form__tipo ">
             <h3>Tipo de envio</h3>
-            <input type="radio" id="premium" name="tipo-de-envio">
+            <input type="radio" id="premium" value="15" name="tipo-de-envio" >
             <label for="premium"> Premium 2 a 5 días (15%)</label>
             <br>
-            <input type="radio" id="express" name="tipo-de-envio">
+            <input type="radio" id="express" value="7" name="tipo-de-envio" >
             <label for="express"> Express 5 a 8 días (7%)</label>
             <br>
-            <input type="radio" id="standard" name="tipo-de-envio">
+            <input type="radio" id="standard" value="5" name="tipo-de-envio" >
             <label for="standard"> Standard 12 a 15 días (5%)</label>
+            <p class="text-danger d-none" id="alert-envio-feedback">Debes seleccionar un envío</p>
           </div>
-          
-          <div class="form__direccion">
+
+          <div class="form__direccion needs-validation">
             <h3>Dirección</h3>
             <div>
               <label for="calle" class="form-label">Calle</label>
-              <input type="text" name="calle" id="calle" class="form-control">
+              <input type="text" name="calle" id="calle" class="form-control" aria-describedby="streetFeedback">
+              <div id="streetFeedback" class="invalid-feedback">
+                Ingrese una calle
+              </div>
             </div>
             <div>
               <label for="numero" class="form-label">Número</label>
-              <input type="text" name="numero" id="numero" class="form-control">
+              <input type="text" name="numero" id="numero" class="form-control" aria-describedby="numberFeedback">
+              <div id="numberFeedback" class="invalid-feedback">
+                Ingrese una dirección
+              </div>
             </div>
             <div>
               <label for="esq" class="form-label">Esquina</label>
-              <input type="text" name="esq" id="esq" class="form-control">
+              <input type="text" name="esq" id="esq" class="form-control" aria-describedby="esqFeedback">
+              <div id="esqFeedback" class="invalid-feedback">
+                Ingrese una calle
+              </div>
             </div>
           </div>
-          <button type="submit" form="compra" class="btn btn-outline-primary m-3">Comprar</button>
         </form>
       </div>
     </div>
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                               Subtotales                                -->
+    <!-- ----------------------------------------------------------------------- -->
+    <section class="costos mt-3 container">
+      <h3 class="text-start">Costos</h3>
+      <ul class="list-group pt-2">
+        <li class="list-group-item d-flex justify-content-between">
+          Subtotal
+          <span id="costos__subtotal">
+          </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          Envío
+          <span id="costos__envio">
+          </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between fw-bold">
+          Total
+          <span id="costos__total">
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                             Formas de Pago                              -->
+    <!-- ----------------------------------------------------------------------- -->
+    <section class="formas-de-pago text-start mt-3 container">
+      <h3>Formas de Pago</h3>
+      <p id="forma-de-pago__text" class="text-danger">No ha seleccionado una forma de pago</p>
+      <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#select-pay-method"
+        id="btn-select-method">Seleccionar</button>
+      <!-- -------------------------------- modal -------------------------------- -->
+      <div class="modal fade" id="select-pay-method">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Seleccione un método de pago</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body container">
+              <!-- -------------------------------- card --------------------------------- -->
+              <div class="container p-3">
+                <input type="radio" name="pay-method" id="credit-card" data-name="Tarjeta de Credito" value="credit">
+                <label for="credit-card">Tarjeta de Crédito</label>
+                <hr>
+                <div id="credit-form">
+                  <div>
+                    <label for="card-number">Numero de Tarjeta</label>
+                    <input type="text" name="card-number" class="form-control">
+                    <div style="width: 100px;">
+                      <label for="card-cvv"> Código de Seg.</label>
+                      <input type="text" name="card-cvv" class="form-control">
+                    </div>
+                  </div>
+                  <div>
+                    <label for="card-vto">Vencimiento (MM/AA)</label>
+                    <input type="text" name="card-vto" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <!-- -------------------------------- bank --------------------------------- -->
+              <div class="container p-3 ">
+                <input type="radio" name="pay-method" id="bank" data-name="Transferencia Bancaria" value="bank" >
+                <label for="bank">Transferencia Bancaria</label>
+                <hr>
+                <div id="bank-form">
+                  <label for="bank-number-account">Numero de Cuenta</label>
+                  <input type="text" id="bank-number-account" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <button class="btn btn-primary" id="finalizar-compra">Finalizar Compra</button>
 
   </main>
   <!-- ------------------------------- footer -------------------------------- -->
