@@ -2,11 +2,10 @@ var containerHTML = document.getElementById('container-products')
 var allData = []
 var getData = () => {
     getJSONData(`https://japceibal.github.io/emercado-api/cats_products/${localStorage.catID}.json`)
-    .then(e => {
-        var products = e.data.products;
-        allData = products
-        showProducts(products)
-    })
+        .then(e => {
+            allData = e.data.products;
+            showProducts(allData)
+        })
 }
 
 
@@ -17,7 +16,6 @@ var getData = () => {
 var showProducts = (list) => {
     containerHTML.innerHTML = ''
     for (product of list) {
-
         let card = `
         <div onclick="productID(${product.id})" class="card m-2 cursor-active" style="width: 18rem;">
         <img src="${product.image}" class="card-img-top" alt="...">
@@ -81,30 +79,15 @@ function sortProducts(type, array) {
     let result = [];
     if (type == 'costDes') {
         result = array.sort(function (a, b) {
-            let aCount = parseInt(a.cost);
-            let bCount = parseInt(b.cost);
-
-            if (aCount > bCount) { return -1; }
-            if (aCount < bCount) { return 1; }
-            return 0;
+            return b.cost - a.cost
         })
     } else if (type == 'costAsc') {
         result = array.sort(function (a, b) {
-            let aCount = parseInt(a.cost);
-            let bCount = parseInt(b.cost);
-
-            if (aCount > bCount) { return 1; }
-            if (aCount < bCount) { return -1; }
-            return 0;
+            return a.cost - b.cost
         })
     } else {
         result = array.sort(function (a, b) {
-            let aCount = parseInt(a.soldCount);
-            let bCount = parseInt(b.soldCount);
-
-            if (aCount > bCount) { return -1; }
-            if (aCount < bCount) { return 1; }
-            return 0;
+            return b.soldCount - a.soldCount
         })
     }
     showProducts(result)

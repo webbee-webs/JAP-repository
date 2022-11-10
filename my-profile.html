@@ -27,6 +27,12 @@
 </head>
 
 <body>
+  <script>
+    let _user = sessionStorage.getItem('userName')
+    if (_user == 'null' || _user == undefined) {
+      window.location = './index.html'
+    }
+  </script>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -50,13 +56,36 @@
       </div>
     </div>
   </nav>
+  <!-- -------------------------------- Main --------------------------------- -->
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container p-4">
+      <h3 id="userName">Perfil</h3>
+      <div id="user-photo" class="m-4">
+        <img src="./img/user.webp" id="userImage" style="max-width: 200px;"/>
+        <input type="file" id="imagenSubida" class="form-control w-50">
       </div>
+      <form action="" id="profile-data" class="d-flex flex-column flex-md-row p-4">
+        <div class="w-100 w-md-50 me-3">
+          <label for="name" class="form-label">Nombre*</label>
+          <input required type="text" id="name" class="form-control">
+          <label for="lastname" class="form-label">Apellido*</label>
+          <input required type="text" id="lastname" class="form-control">
+          <label for="email" class="form-label">E-mail*</label>
+          <input required type="email" id="email" class="form-control">
+        </div>
+        <div class="w-100 w-md-50 ms-md-3">
+          <label for="snd-name" class="form-label">Segundo nombre</label>
+          <input type="text" id="snd-name" class="form-control">
+          <label for="snd-lastname" class="form-label">Segundo Apellido</label>
+          <input type="text" id="snd-lastname" class="form-control">
+          <label for="phone" class="form-label">Teléfono</label>
+          <input type="text" id="phone" class="form-control">
+        </div>
+      </form>
+      <button type="submit" id="save-user-data" class="btn btn-primary ms-4">Guardar Cambios</button>
     </div>
   </main>
+  <!-- ------------------------------- Footer -------------------------------- -->
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">

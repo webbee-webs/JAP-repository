@@ -16,7 +16,7 @@ var submit = () => {
         pass.placeholder = "Campo obligatorio"
         return
     }
-    sessionStorage.setItem('userName', user.value)
+    sessionStorage.setItem('userName', user.value.toLowerCase())
     window.location.href = "./home.html"
 }
 
