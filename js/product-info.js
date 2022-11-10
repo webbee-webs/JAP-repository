@@ -4,12 +4,12 @@ getJSONData(`https://japceibal.github.io/emercado-api/products/${localStorage.ge
         dataProduct = e.data
         showInfo(e.data)
     })
-    
+
 const showInfo = (data) => {
     var container = document.getElementById('productInfo')
     container.innerHTML = `
     <a href='./products.html'>Regresar</a>
-    <a href="./cart.html" class="btn btn-primary ml-3" onclick="cart.addData(dataProduct)">comprar</a>
+    <a href="./cart.html" class="btn btn-primary ml-3" onclick="cart.addData(dataProduct)">Comprar</a>
 <h2 class="bold mt-4">${data.name}</h2>
 <hr>
 <h3>Precio</h3>
@@ -72,22 +72,26 @@ const isActive = (count, btn) => {
 /* -------------------------------------------------------------------------- */
 
 getJSONData(`https://japceibal.github.io/emercado-api/products_comments/${localStorage.getItem('productID')}.json`)
-    .then(e => showComments(e.data))
+    .then(e => {
+        comments = e.data
+        showComments(e.data)
+    })
 
 const showComments = (data) => {
     var commentsContainer = document.querySelector('ol.list-group')
+    commentsContainer.innerHTML = ''
     // El if quita el mensaje de que no hay comentarios
-    if (data.length > 0) {
-        commentsContainer.innerHTML = ''
+    if (data.length < 1) {
+        commentsContainer.innerHTML = '<h4 class="text-secondary border border-secondary p-3 ">Upss... Parece que no hay comentarios</h4>'
     }
     for (comment of data) {
         commentsContainer.innerHTML += `
-        <li class="list-group-item d-flex justify-content-between align-items-start">
+        <li class="list-group-item d-flex justify-content-between align-items-center align-items-md-start">
             <div class="ms-2 me-auto">
                 <div class="fw-bold">${comment.user} <span class="fw-normal">${comment.dateTime}</span></div>
                     ${comment.description}
                 </div>
-            <div>
+            <div class="d-flex">
                 ${stars(comment.score)
             }
             </div>
@@ -134,3 +138,26 @@ const showRelatedProducts = (products) => {
         container.innerHTML += card
     }
 }
+/* -------------------------------------------------------------------------- */
+/*                              Enviar comentario                             */
+/* -------------------------------------------------------------------------- */
+
+document.getElementById('send-comment-btn').addEventListener('click', (e) => {
+    let today = new Date()
+    let stars = 0
+    let comment = document.getElementById('floatingTextarea')
+    for (input of document.querySelectorAll('p.comment__stars input')) {
+        if (input.checked) {
+            stars = input.value
+        }
+    }
+    e.preventDefault()
+    comments.unshift({
+        user: sessionStorage.getItem('userName'),
+        dateTime: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()} ${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`,
+        description: comment.value,
+        score: stars || 1
+    })
+    showComments(comments)
+    comment.innerHTML = ''
+})

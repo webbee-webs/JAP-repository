@@ -10,6 +10,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/cart.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link" href="home.html">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="categories.html">Categorías</a>
@@ -61,12 +62,12 @@
           <tr>
             <th scope="col" class="d-none d-sm-block">Imagen</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Costo</th>
+            <th scope="col"  class="d-none d-sm-block">Costo</th>
             <th scope="col" class="table__cant">Cantidad</th>
             <th scope="col" class="table__subtotal">Subtotal</th>
           </tr>
         </thead>
-        <tbody class="table__products-list" id="table__products-list">
+        <tbody class="table__products-list w-100" id="table__products-list">
 
         </tbody>
       </table>
@@ -192,7 +193,7 @@
         </div>
       </div>
     </section>
-    <button class="btn btn-primary" id="finalizar-compra">Finalizar Compra</button>
+    <button class="btn btn-primary mt-4 mt-md-0" id="finalizar-compra">Finalizar Compra</button>
 
   </main>
   <!-- ------------------------------- footer -------------------------------- -->

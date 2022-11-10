@@ -65,7 +65,7 @@
           <div class="col">
             <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
           </div>
-          <div class="col-3 p-0">
+          <div class="p-0 text-end">
             <div class="btn-group" role="group">
               <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
               <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
@@ -74,7 +74,14 @@
         </div>
       </div>
     </div>
-    <div class="container d-flex flex-wrap" id="container-products">
+    <div class="row mt-2">
+      <div class="col d-flex justify-content-end">
+        <div class="input-group mb-3 w-50" style="min-width: 250px;">
+          <input type="text" class="form-control" placeholder="Ej: Fiat" id="searchInput">
+          <button class="btn btn-primary input-group-text" id="searchBtn">Buscar</button>
+        </div>
+      </div>
+    <div class="container d-inline-flex flex-wrap justify-content-center justify-content-md-start" id="container-products">
     </div>
   </main>
 

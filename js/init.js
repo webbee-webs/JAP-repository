@@ -63,7 +63,6 @@ navBar[navBar.length - 1].innerHTML = userName
 /* -------------------------------------------------------------------------- */
 
 var productID = (id) => {
-  console.log(id)
   localStorage.setItem('productID', id)
   window.location.href = "./product-info.html";
 }
@@ -92,6 +91,10 @@ class Cart {
     this.data[`item${obj.id}`] = obj
     localStorage.setItem('cart', JSON.stringify(this.data))
   }
+  async deleteItem(id){
+    Object.keys(this.data).length < 2 ? this.clearData() : delete this.data[`item${id}`];
+    this.render()
+  }
 
   clearData() {
     this.data = {}
@@ -103,6 +106,9 @@ class Cart {
       this.addData(this.data[data])
     }
   }
+  /* -------------------------------------------------------------------------- */
+  /*                                   RENDER                                   */
+  /* -------------------------------------------------------------------------- */
   async render() {
     this.payMethod = undefined
     this.subtotal = 0
@@ -114,7 +120,6 @@ class Cart {
       let itemCost = this.data[data].currency == 'UYU' ? (this.data[data].cost * (this.data[data].count || 1)) / 40 : this.data[data].cost * (this.data[data].count || 1);
       this.subtotal += itemCost
       this.allContainers[0].innerHTML = 'U$D ' + this.subtotal.toFixed(2)
-      console.log(this.envio)
       this.allContainers[1].innerHTML = 'U$D ' + (this.subtotal * this.envio).toFixed(2)
       this.total = this.subtotal * this.envio + this.subtotal
       this.allContainers[2].innerHTML = 'U$D ' + this.total.toFixed(2)
@@ -125,7 +130,6 @@ class Cart {
   /*                                Validaciones                                */
   /* -------------------------------------------------------------------------- */
   validate() {
-    debugger
     let alertAllOK = document.getElementById('compraExitosa')
     let isOk = true
     let alerts = document.querySelectorAll('.alert')
@@ -178,7 +182,6 @@ class Cart {
     if (this.payMethod == undefined) {
       isOk = false
     }
-    console.log(isOk)
 
     if (isOk) {
       alertAllOK.classList.remove('d-none')
@@ -195,7 +198,6 @@ class Cart {
 /* -------------------------- Modificar el producto ------------------------- */
 var change = (id) => {
   cart.data[`item${id}`].count = document.getElementById(`cant${id}`).value
-  console.log(cart.data[`item${id}`].count)
   cart.render()
 }
 
@@ -204,13 +206,13 @@ let newProduct = (product) => {
   product.body = () => {
     let html = `
     <tr class="product">
-        <th class="d-none d-sm-block">
+        <th  class="d-none d-sm-block">
             <img class="product__image" src="${product.images[0]}">
         </th>
         <th>
             ${product.name}
         </th>
-        <th>
+        <th  class="d-none d-sm-table-cell">
         ${product.currency} ${product.cost}
         </th>
         <th>
@@ -218,6 +220,9 @@ let newProduct = (product) => {
         </th>
         <th>
             ${product.currency} ${(product.count || 1) * product.cost}
+        </th>
+        <th class="">
+          <button class="btn btn-outline-danger" onclick="cart.deleteItem('${product.id}')"><i class="bi bi-trash3-fill"></i></button>
         </th>
     </tr>
     `

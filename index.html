@@ -26,10 +26,6 @@
       max-width: min(300px, 70vw);
     }
 
-    #login input::placeholder {
-      color: red;
-    }
-
     #login label {
       margin: auto;
       text-align: left;
@@ -47,16 +43,16 @@
   <main class="mt-5">
     <div class="container text-center">
       <img class="logo" src="./img/login.png">
-      <div class="flex-column" id="login">
+      <form class="flex-column" id="login">
         <h2>Login</h2>
         <label for="user">Usuario*</label>
-        <input id="user" type="text" class="form-control">
+        <input id="user" type="text" required class="form-control">
         <label for="pass">Contraseña*</label>
-        <input id="pass" type="password" class="form-control">
-        <button class="btn btn-primary" onclick="submit()">Ingresar</button>
+        <input id="pass" type="password"  required class="form-control">
+        <button class="btn btn-primary" id="submitButton">Ingresar</button>
         <span>O</span>
         <div class="g-signin2 btn" data-onsuccess="onSignIn" onclick="loginGoogle()"></div>
-      </div>
+      </form>
     </div>
   </main>
   <footer class="text-muted">

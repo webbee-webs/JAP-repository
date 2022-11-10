@@ -4,7 +4,7 @@ var getData = () => {
     getJSONData(`https://japceibal.github.io/emercado-api/cats_products/${localStorage.catID}.json`)
         .then(e => {
             allData = e.data.products;
-            showProducts(allData)
+            renderProducts(allData)
         })
 }
 
@@ -13,7 +13,7 @@ var getData = () => {
 /*                               RENDER PRODUCTS                              */
 /* -------------------------------------------------------------------------- */
 
-var showProducts = (list) => {
+var renderProducts = (list) => {
     containerHTML.innerHTML = ''
     for (product of list) {
         let card = `
@@ -60,7 +60,7 @@ var filter = () => {
                 return false
             })
             allData = list
-            showProducts(list)
+            renderProducts(list)
 
         })
 }
@@ -90,7 +90,21 @@ function sortProducts(type, array) {
             return b.soldCount - a.soldCount
         })
     }
-    showProducts(result)
+    renderProducts(result)
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   SEARCH                                   */
+/* -------------------------------------------------------------------------- */
+
+let search = (data = document.getElementById('searchInput').value) => {
+    data = data.toLowerCase()
+    let result = allData.filter((foo) => {
+        if (foo.description.toLowerCase().includes(data) || foo.name.toLowerCase().includes(data)) {
+            return foo
+        }
+    })
+    renderProducts(result)
 }
 
 
@@ -103,5 +117,9 @@ document.getElementById('clearRangeFilter').addEventListener('click', () => clea
 document.getElementById('sortCostDes').addEventListener('click', () => sortProducts('costDes', allData))
 document.getElementById('sortCostAsc').addEventListener('click', () => sortProducts('costAsc', allData))
 document.getElementById('sortSoldCount').addEventListener('click', () => sortProducts('change', allData))
+document.getElementById('searchBtn').addEventListener('click', () => {
+    search()
+    document.getElementById('searchInput').addEventListener('input', (e) => search(e.target.value))
+})
 
 getData()

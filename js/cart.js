@@ -32,7 +32,6 @@ var payMethodsFunc = () => {
 
 document.getElementById('credit-card').addEventListener('click', ()=>payMethodsFunc())
 document.getElementById('bank').addEventListener('click', ()=>payMethodsFunc())
-
 document.getElementById('finalizar-compra').addEventListener('click',()=>{
     cart.validate()
 })

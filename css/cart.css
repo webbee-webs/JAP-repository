@@ -1,4 +1,6 @@
-
+.table__products-list{
+    font-size: 14px;
+}
 
 .table__thead{
     text-overflow: ellipsis;
