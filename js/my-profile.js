@@ -1,5 +1,5 @@
 const input = document.querySelector('input[type="file"]')
-const cl = (foo) => console.log(foo);
+
 var currentUser = sessionStorage.getItem('userName')
 var allUsers = JSON.parse(localStorage.getItem('allUsers')) || {}
 const saveUsers = () => {

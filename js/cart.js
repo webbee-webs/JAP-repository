@@ -12,7 +12,6 @@ document.querySelector('.form__tipo').addEventListener('click', (e) => {
 var payMethodsFunc = () => {
     let payMethods = document.querySelectorAll('input[name="pay-method"]')
     for (Method of payMethods) {
-        console.log(Method.input)
         let inputs = document.querySelectorAll(`#${Method.value}-form input`)
         for (input of inputs) {
             input.disabled = true
