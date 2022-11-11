@@ -2,11 +2,10 @@ var containerHTML = document.getElementById('container-products')
 var allData = []
 var getData = () => {
     getJSONData(`https://japceibal.github.io/emercado-api/cats_products/${localStorage.catID}.json`)
-    .then(e => {
-        var products = e.data.products;
-        allData = products
-        showProducts(products)
-    })
+        .then(e => {
+            allData = e.data.products;
+            renderProducts(allData)
+        })
 }
 
 
@@ -14,10 +13,9 @@ var getData = () => {
 /*                               RENDER PRODUCTS                              */
 /* -------------------------------------------------------------------------- */
 
-var showProducts = (list) => {
+var renderProducts = (list) => {
     containerHTML.innerHTML = ''
     for (product of list) {
-
         let card = `
         <div onclick="productID(${product.id})" class="card m-2 cursor-active" style="width: 18rem;">
         <img src="${product.image}" class="card-img-top" alt="...">
@@ -62,7 +60,7 @@ var filter = () => {
                 return false
             })
             allData = list
-            showProducts(list)
+            renderProducts(list)
 
         })
 }
@@ -81,33 +79,32 @@ function sortProducts(type, array) {
     let result = [];
     if (type == 'costDes') {
         result = array.sort(function (a, b) {
-            let aCount = parseInt(a.cost);
-            let bCount = parseInt(b.cost);
-
-            if (aCount > bCount) { return -1; }
-            if (aCount < bCount) { return 1; }
-            return 0;
+            return b.cost - a.cost
         })
     } else if (type == 'costAsc') {
         result = array.sort(function (a, b) {
-            let aCount = parseInt(a.cost);
-            let bCount = parseInt(b.cost);
-
-            if (aCount > bCount) { return 1; }
-            if (aCount < bCount) { return -1; }
-            return 0;
+            return a.cost - b.cost
         })
     } else {
         result = array.sort(function (a, b) {
-            let aCount = parseInt(a.soldCount);
-            let bCount = parseInt(b.soldCount);
-
-            if (aCount > bCount) { return -1; }
-            if (aCount < bCount) { return 1; }
-            return 0;
+            return b.soldCount - a.soldCount
         })
     }
-    showProducts(result)
+    renderProducts(result)
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   SEARCH                                   */
+/* -------------------------------------------------------------------------- */
+
+let search = (data = document.getElementById('searchInput').value) => {
+    data = data.toLowerCase()
+    let result = allData.filter((foo) => {
+        if (foo.description.toLowerCase().includes(data) || foo.name.toLowerCase().includes(data)) {
+            return foo
+        }
+    })
+    renderProducts(result)
 }
 
 
@@ -120,5 +117,9 @@ document.getElementById('clearRangeFilter').addEventListener('click', () => clea
 document.getElementById('sortCostDes').addEventListener('click', () => sortProducts('costDes', allData))
 document.getElementById('sortCostAsc').addEventListener('click', () => sortProducts('costAsc', allData))
 document.getElementById('sortSoldCount').addEventListener('click', () => sortProducts('change', allData))
+document.getElementById('searchBtn').addEventListener('click', () => {
+    search()
+    document.getElementById('searchInput').addEventListener('input', (e) => search(e.target.value))
+})
 
 getData()

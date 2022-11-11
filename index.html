@@ -11,52 +11,23 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: rgb(248, 249, 250);
-    }
-
-    .logo {
-      max-width: min(500px, 70vw);
-    }
-
-    #login input {
-      margin: auto;
-      margin-bottom: 5px;
-      max-width: min(300px, 70vw);
-    }
-
-    #login input::placeholder {
-      color: red;
-    }
-
-    #login label {
-      margin: auto;
-      text-align: left;
-      display: block;
-      max-width: min(300px, 70vw);
-    }
-
-    #login button {
-      margin: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/login.css">
 </head>
 
 <body>
   <main class="mt-5">
     <div class="container text-center">
       <img class="logo" src="./img/login.png">
-      <div class="flex-column" id="login">
+      <form class="flex-column" id="login">
         <h2>Login</h2>
         <label for="user">Usuario*</label>
-        <input id="user" type="text" class="form-control">
+        <input id="user" type="text" required class="form-control">
         <label for="pass">Contraseña*</label>
-        <input id="pass" type="password" class="form-control">
-        <button class="btn btn-primary" onclick="submit()">Ingresar</button>
+        <input id="pass" type="password"  required class="form-control">
+        <button class="btn btn-primary" id="submitButton">Ingresar</button>
         <span>O</span>
         <div class="g-signin2 btn" data-onsuccess="onSignIn" onclick="loginGoogle()"></div>
-      </div>
+      </form>
     </div>
   </main>
   <footer class="text-muted">
@@ -70,7 +41,7 @@
     </div>
   </footer>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')">
+  <script src="https://accounts.google.com/gsi/client" >
   </script>
   <script src="js/login.js"></script>
 </body>
