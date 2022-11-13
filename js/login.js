@@ -1,6 +1,4 @@
-/* -------------------------------------------------------------------------- */
-/*                              BOTON DE INGRESO                              */
-/* -------------------------------------------------------------------------- */
+/* ------------------------------- Boton login ------------------------------ */
 
 document.getElementById('submitButton').addEventListener('click', e => {
     e.preventDefault()
@@ -13,9 +11,7 @@ document.getElementById('submitButton').addEventListener('click', e => {
     }
 })
 
-/* -------------------------------------------------------------------------- */
-/*                             LOG IN WITH GOOGLE                             */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------- Login con Google ---------------------------- */
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();

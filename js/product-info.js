@@ -2,42 +2,48 @@ var dataProduct = {}
 getJSONData(`https://japceibal.github.io/emercado-api/products/${localStorage.getItem('productID')}.json`)
     .then(e => {
         dataProduct = e.data
-        showInfo(e.data)
+        render(e.data)
     })
 
-const showInfo = (data) => {
+    /* -------------------------------------------------------------------------- */
+    /*                                   RENDER                                   */
+    /* -------------------------------------------------------------------------- */
+const render = (data) => {
     var container = document.getElementById('productInfo')
     container.innerHTML = `
     <a href='./products.html'>Regresar</a>
-    <a href="./cart.html" class="btn btn-primary ml-3" onclick="cart.addData(dataProduct)">Comprar</a>
-<h2 class="bold mt-4">${data.name}</h2>
-<hr>
-<h3>Precio</h3>
-<p class="fs-5">${data.currency + ' ' + data.cost}</p>
-<h3>Descripción</h3>
-<p class="fs-5">${data.description}</p>
-<h3>Categoría</h3>
-<p class="fs-5">${data.category}</p>
-<h3>Cantidad de vendidos</h3>
-<p class="fs-5">${data.soldCount}</p>
+    <a href="./cart.html" class="btn btn-primary ms-3" onclick="cart.addData(dataProduct)">Comprar</a>
 
-<h3>Imágenes ilustrativas</h3>
+    <h2 class="bold mt-4">${data.name}</h2>
+    <hr>
+    <h3>Precio</h3>
+    <p class="fs-5">${data.currency + ' ' + data.cost}</p>
+    <h3>Descripción</h3>
+    <p class="fs-5">${data.description}</p>
+    <h3>Categoría</h3>
+    <p class="fs-5">${data.category}</p>
+    <h3>Cantidad de vendidos</h3>
+    <p class="fs-5">${data.soldCount}</p>
 
-<div id="carouselExampleIndicators" style="width: 50vw;" class="carousel slide" data-bs-ride="true">
-  <div class="carousel-indicators" id="carouselIndicators">
-  </div>
-  <div class="carousel-inner" id="galeryOfImages">
+    <h3>Imágenes ilustrativas</h3>
 
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+    <div id="carouselExampleIndicators" style="width: 50vw;" class="carousel slide" data-bs-ride="true">
+        <div class="carousel-indicators" id="carouselIndicators">
+        </div>
+
+        <div class="carousel-inner" id="galeryOfImages">
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
     `
     /* ---- Esta parte agrega el html necesario para que funcione cada imagen del slider --- */
     let indicators = document.getElementById('carouselIndicators')
@@ -45,13 +51,14 @@ const showInfo = (data) => {
     let counterImg = 0
 
     for (image of data.images) {
-        galery.innerHTML += `<div class="carousel-item ${isActive(counterImg)
-            }">
-        <img src="${image}" class="d-block w-100" alt="...">
+        galery.innerHTML += `
+        <div class="carousel-item ${isActive(counterImg)}">
+            <img src="${image}" class="d-block w-100" alt="...">
         </div>`
+
         indicators.innerHTML += `
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counterImg}" aria-label="Slide ${counterImg} class="${isActive(counterImg)
-            }" ${isActive(counterImg, true)}></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counterImg}" aria-label="Slide ${counterImg} class="${isActive(counterImg)}" 
+        ${isActive(counterImg, true)}></button>
         `
         counterImg++
     }
@@ -67,9 +74,9 @@ const isActive = (count, btn) => {
     }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                 COMENTARIOS                                */
-/* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                                 COMENTARIOS                                */
+    /* -------------------------------------------------------------------------- */
 
 getJSONData(`https://japceibal.github.io/emercado-api/products_comments/${localStorage.getItem('productID')}.json`)
     .then(e => {

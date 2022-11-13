@@ -16,7 +16,7 @@ var getData = () => {
 var renderProducts = (list) => {
     containerHTML.innerHTML = ''
     for (product of list) {
-        let card = `
+        containerHTML.innerHTML += `
         <div onclick="productID(${product.id})" class="card m-2 cursor-active" style="width: 18rem;">
         <img src="${product.image}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -25,7 +25,6 @@ var renderProducts = (list) => {
             <p class="fw-light">${product.soldCount} vendidos</p>
         </div>
         </div>`
-        containerHTML.innerHTML += card
     }
 }
 

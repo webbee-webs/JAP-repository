@@ -14,25 +14,20 @@ function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)
     {
-        result = array.sort(function(a, b) {
+        result = array.sort((a, b)=>{
             if ( a.name < b.name ){ return -1; }
             if ( a.name > b.name ){ return 1; }
             return 0;
         });
     }else if (criteria === ORDER_DESC_BY_NAME){
-        result = array.sort(function(a, b) {
+        result = array.sort((a, b) =>{
             if ( a.name > b.name ){ return -1; }
             if ( a.name < b.name ){ return 1; }
             return 0;
         });
     }else if (criteria === ORDER_BY_PROD_COUNT){
-        result = array.sort(function(a, b) {
-            let aCount = parseInt(a.productCount);
-            let bCount = parseInt(b.productCount);
-
-            if ( aCount > bCount ){ return -1; }
-            if ( aCount < bCount ){ return 1; }
-            return 0;
+        result = array.sort((a, b)=>{
+            return b.productCount - a.productCount
         });
     }
 
@@ -44,14 +39,16 @@ function setCatID(id) {
     window.location = "products.html"
 }
 
-function showCategoriesList(){
+/* ---------------------------- Renderizado de Categories ---------------------------- */
+
+function renderCategoriesList(){
 
     let htmlContentToAppend = "";
     for(let i = 0; i < currentCategoriesArray.length; i++){
         let category = currentCategoriesArray[i];
 
-        if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
+        if (((minCount == undefined) || parseInt(category.productCount) >= minCount) &&
+            ((maxCount == undefined) || parseInt(category.productCount) <= maxCount)){
 
             htmlContentToAppend += `
             <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
@@ -75,6 +72,8 @@ function showCategoriesList(){
     }
 }
 
+/* ------------------------- Ordenado de Categorias ------------------------- */
+
 function sortAndShowCategories(sortCriteria, categoriesArray){
     currentSortCriteria = sortCriteria;
 
@@ -85,7 +84,7 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
 
     //Muestro las categorías ordenadas
-    showCategoriesList();
+    renderCategoriesList();
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -95,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(CATEGORIES_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
             currentCategoriesArray = resultObj.data
-            showCategoriesList()
+            renderCategoriesList()
             //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
         }
     });
@@ -119,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         minCount = undefined;
         maxCount = undefined;
 
-        showCategoriesList();
+        renderCategoriesList();
     });
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
@@ -142,6 +141,6 @@ document.addEventListener("DOMContentLoaded", function(e){
             maxCount = undefined;
         }
 
-        showCategoriesList();
+        renderCategoriesList();
     });
 });

@@ -1,4 +1,6 @@
+// Se llama a la funcion de renderizado del carrito
 cart.render()
+
 document.querySelector('.form__tipo').addEventListener('click', (e) => {
     let radBut = document.querySelectorAll('input[type="radio"][name="tipo-de-envio"]')
     for (button of radBut) {
